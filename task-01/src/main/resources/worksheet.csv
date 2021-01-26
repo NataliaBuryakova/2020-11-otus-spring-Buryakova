@@ -1,0 +1,6 @@
+number,questionText,answersText, correctAnswerNumber
+"1","Question1","1.answer;2.answer;3.answer","3"
+"2","Question2","1.answer;2.answer;3.answer","2"
+"3","Question3","1.answer;2.answer;3.answer","2"
+"4","Question4","1.answer;2.answer;3.answer","1"
+"5","Question5","",""
