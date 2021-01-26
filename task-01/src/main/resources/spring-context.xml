@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="worksheetDao" class="ru.otus.task01.dao.WorksheetDaoImpl">
+        <constructor-arg name="fileName" value="worksheet.csv"/>
+    </bean>
+    <bean id="worksheetServiceImpl" class="ru.otus.task01.service.WorksheetServiceImpl">
+        <constructor-arg name="worksheetDao" ref="worksheetDao"/>
+    </bean>
+    <bean id="startServiceImpl" class="ru.otus.task01.service.StartServiceImpl">
+        <constructor-arg name="worksheetService" ref="worksheetServiceImpl"/>
+    </bean>
+
+</beans>
