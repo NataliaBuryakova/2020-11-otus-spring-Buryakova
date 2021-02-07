@@ -1,7 +1,6 @@
 package ru.otus.task02.service;
 
 import ru.otus.task02.domain.Person;
-import ru.otus.task02.exception.PersonCreateException;
 
 public interface PersonService {
     /**

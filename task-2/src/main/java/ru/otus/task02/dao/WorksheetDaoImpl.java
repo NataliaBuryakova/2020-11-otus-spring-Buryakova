@@ -3,22 +3,21 @@ package ru.otus.task02.dao;
 import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
+import ru.otus.task02.config.AppConfig;
 import ru.otus.task02.domain.Worksheet;
-import ru.otus.task02.exception.WorksheetReadingException;
 
 import java.io.*;
 import java.util.List;
-@Service
-@PropertySource("classpath:application.properties")
+@Repository
+
 public class WorksheetDaoImpl implements WorksheetDao{
-    @Value("${csv.worksheet.name}")
+
     private String fileName;
     @Autowired
-    public WorksheetDaoImpl() {
+    public WorksheetDaoImpl(AppConfig appConfig) {
+        this.fileName = appConfig.getFileName();
     }
-
     public WorksheetDaoImpl(String fileName) {
         this.fileName = fileName;
     }

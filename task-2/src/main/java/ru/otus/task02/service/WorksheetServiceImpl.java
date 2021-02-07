@@ -1,31 +1,28 @@
 package ru.otus.task02.service;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import ru.otus.task02.config.AppConfig;
 import ru.otus.task02.dao.WorksheetDao;
 import ru.otus.task02.domain.Answer;
 import ru.otus.task02.domain.Question;
 import ru.otus.task02.domain.Worksheet;
-import ru.otus.task02.exception.TestBuildingException;
-import ru.otus.task02.exception.TestEmptyException;
-import ru.otus.task02.exception.WorksheetReadingException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@PropertySource("classpath:application.properties")
+
 public class WorksheetServiceImpl implements WorksheetService{
-    @Value("${test.correct.answers.value}")
-    private int correctValue;
+
+    private final int correctAnswersValue;
 
     private final WorksheetDao worksheetDao;
 
-    public WorksheetServiceImpl(WorksheetDao worksheetDao)
+    public WorksheetServiceImpl(WorksheetDao worksheetDao, @Value("${test.correct.answers.value}") int correctAnswersValue)
     {
         this.worksheetDao = worksheetDao;
+        this.correctAnswersValue = correctAnswersValue;
     }
     @Override
     public List<Worksheet> getWorksheetList() throws TestBuildingException {
@@ -78,6 +75,6 @@ public class WorksheetServiceImpl implements WorksheetService{
         return String.format("\t %s. %s\n", answer.getNumber(), answer.getText());
     }
     private Boolean isTestDone(int correctAnswers){
-        return  correctAnswers>=correctValue;
+        return  correctAnswers>=correctAnswersValue;
     }
 }

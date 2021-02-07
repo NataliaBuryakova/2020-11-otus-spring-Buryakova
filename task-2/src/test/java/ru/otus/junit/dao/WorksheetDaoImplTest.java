@@ -1,6 +1,7 @@
 package ru.otus.junit.dao;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.task02.dao.WorksheetDaoImpl;
@@ -16,11 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("WorksheetDaoImpl class тест: ")
 public class WorksheetDaoImplTest  {
-    private static Worksheet worksheet;
+    private Worksheet worksheet;
     private WorksheetDaoImpl worksheetDao;
 
-    @BeforeAll
-    static void initWorksheet(){
+    @BeforeEach
+     void initWorksheet(){
         List<Answer> answers = new ArrayList<>(1);
         answers.add(new Answer());
         worksheet = new Worksheet(new Question("5", "How many letters are in the Russian alphabet?( Write your answer)"),answers,"33");

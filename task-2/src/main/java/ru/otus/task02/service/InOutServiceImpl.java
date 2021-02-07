@@ -1,22 +1,29 @@
 package ru.otus.task02.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 @Service
 public class InOutServiceImpl implements InOutService {
-    @Override
-    public Scanner initScanner(){
-        return new Scanner(System.in);
+   private final Scanner scanner;
+   private final PrintStream out;
+    public InOutServiceImpl(@Value("#{T(java.lang.System).out}") PrintStream out, @Value("#{T(java.lang.System).in}") InputStream in ) {
+        this.out = out;
+        this.scanner = new Scanner(in);
     }
+
     @Override
-    public String read(Scanner s) {
-        return s.nextLine();
+    public String read() {
+        return scanner.nextLine();
     }
 
     @Override
     public void println(String s) {
-        System.out.println(s);
+        out.println(s);
     }
 
 

@@ -1,4 +1,4 @@
-package ru.otus.task02.exception;
+package ru.otus.task02.dao;
 
 import java.io.IOException;
 
