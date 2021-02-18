@@ -4,7 +4,6 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.otus.task03.config.AppProps;
-import ru.otus.task03.config.WorksheetProps;
 import ru.otus.task03.domain.Worksheet;
 
 import java.io.FileNotFoundException;
@@ -19,7 +18,7 @@ public class WorksheetDaoCsv implements WorksheetDao{
     private final String fileName;
     @Autowired
     public WorksheetDaoCsv(AppProps appConfig) {
-        this.fileName = appConfig.getFileName()+"_"+appConfig.getLanguage()+".csv";
+        this.fileName = appConfig.getFileNameCsv();
     }
 
     public WorksheetDaoCsv(String fileName) {

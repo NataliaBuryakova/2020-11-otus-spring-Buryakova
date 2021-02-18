@@ -17,4 +17,5 @@ public class TestApplication {
         var startService = context.getBean(TestDialogueServiceImpl.class);
         startService.startTest();
     }
+
 }

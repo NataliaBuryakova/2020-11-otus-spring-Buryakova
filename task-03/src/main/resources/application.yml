@@ -1,5 +1,5 @@
 application:
-  language: en
+  language: ru
   fileName: worksheet
 worksheet:
   answers: 4
