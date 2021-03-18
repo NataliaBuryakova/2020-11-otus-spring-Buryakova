@@ -1,6 +1,7 @@
 package ru.otus.task05.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import ru.otus.task05.domain.Author;
 import ru.otus.task05.domain.Book;
 import ru.otus.task05.domain.Genre;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Controller
+@Service
 public class BookController {
     private final InOutService inOutService;
     private final BookService bookService;

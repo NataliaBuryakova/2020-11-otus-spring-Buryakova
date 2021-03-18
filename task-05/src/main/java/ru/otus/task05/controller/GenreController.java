@@ -1,6 +1,7 @@
 package ru.otus.task05.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import ru.otus.task05.domain.Genre;
 import ru.otus.task05.service.GenreService;
 import ru.otus.task05.service.InOutService;
@@ -8,7 +9,7 @@ import ru.otus.task05.service.InOutService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
+@Service
 public class GenreController {
     private final InOutService inOutService;
     private final GenreService genreService;

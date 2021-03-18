@@ -10,13 +10,12 @@ import ru.otus.task05.service.GenreService;
 
 @ShellComponent
 public class ShellController {
-private final BookController bookController;
-private final AuthorController authorController;
-private final GenreController genreController;
-    public ShellController(BookController bookController, AuthorService authorService, GenreService genreService, AuthorController authorController, GenreController genreController) {
+    private final BookController bookController;
+    private final AuthorController authorController;
+    private final GenreController genreController;
+    public ShellController(BookController bookController, AuthorController authorController, GenreController genreController) {
         this.bookController = bookController;
         this.authorController = authorController;
-
         this.genreController = genreController;
     }
 
@@ -46,6 +45,10 @@ private final GenreController genreController;
     @ShellMethod(value = "get Author List", key = {"gal", "getAuthorList"})
     public void getAuthorList() {
         authorController.printList();
+    }
+    @ShellMethod(value = "delete Author", key = {"da", "deleteAuthor"})
+    public void deleteAuthor(@ShellOption long id) {
+        authorController.deleteAuthorById(id);
     }
 
     @ShellMethod(value = "get Genre List", key = {"ggl", "getGenreList"})

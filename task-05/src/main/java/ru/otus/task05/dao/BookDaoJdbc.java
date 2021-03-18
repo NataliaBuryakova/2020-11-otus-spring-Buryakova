@@ -33,7 +33,7 @@ public class BookDaoJdbc implements BookDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcOperations.update("insert into book (title,authorId,genreid) values(:title,:authorId,:genreid)",
                 mapSqlParameterSource,keyHolder);
-        return (long) keyHolder.getKey();
+        return keyHolder.getKey().longValue();
     }
 
     @Override
