@@ -1,5 +1,6 @@
 package ru.otus.task06.dao;
 
+import ru.otus.task06.domain.Author;
 import ru.otus.task06.domain.Genre;
 
 import javax.persistence.EntityManager;
@@ -52,7 +53,8 @@ public class GenreDaoJpa implements GenreDao {
     }
 
     @Override
-    public List<Genre> getAll() {
-        return null;
+    public List<Genre> findAll() {
+        return em.createQuery("select s from Genre s", Genre.class)
+                .getResultList();
     }
 }

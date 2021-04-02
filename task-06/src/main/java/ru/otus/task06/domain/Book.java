@@ -2,12 +2,16 @@ package ru.otus.task06.domain;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Data
 @Entity
+@NamedEntityGraph(name = "author-genre-entity-graph", attributeNodes = {@NamedAttributeNode("author"), @NamedAttributeNode("genre")})
 @Table(name ="book")
 public class Book {
     @Id
@@ -21,6 +25,7 @@ public class Book {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "genreid")
     private Genre genre;
+
 
     public Book(String title, Author author, Genre genre) {
         this.title = title;

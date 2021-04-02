@@ -17,7 +17,7 @@ public interface GenreDao {
 
     Optional<Genre> findByKind(String kind);
 
-    List<Genre> getAll();
+    List<Genre> findAll();
 
     Genre save(Genre genre);
 

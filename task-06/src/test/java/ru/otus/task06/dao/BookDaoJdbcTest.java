@@ -91,7 +91,7 @@ class BookDaoJdbcTest {
     @DisplayName("возвращать список всех жанров")
     @Test
     void shouldReturnCorrectAuthorList() {
-        List<Book> books = bookDao.getAll();
+        List<Book> books = bookDao.findAll();
         assertThat(books).hasSize(EXPECTED_NUMBER_OF_BOOKS)
                 .allMatch(s -> !s.getTitle().equals(""))
                 .allMatch(s -> s.getAuthor()!=null&&!s.getAuthor().getName().equals(""))

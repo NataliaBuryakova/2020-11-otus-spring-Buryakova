@@ -23,3 +23,11 @@ CREATE TABLE BOOK(
     CONSTRAINT genre_fk
     FOREIGN KEY (GENREID)  REFERENCES GENRE (Id)
 );
+
+DROP TABLE IF EXISTS COMMENT;
+CREATE TABLE COMMENT(
+    ID BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    text varchar(255),
+    BOOKID bigint references BOOK(id) on delete cascade,
+    primary key (id)
+);

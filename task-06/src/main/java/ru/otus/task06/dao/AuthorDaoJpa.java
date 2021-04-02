@@ -3,10 +3,7 @@ package ru.otus.task06.dao;
 import org.springframework.stereotype.Repository;
 import ru.otus.task06.domain.Author;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Optional;
 @Repository
@@ -44,16 +41,23 @@ public class AuthorDaoJpa implements AuthorDao{
 
     @Override
     public Optional<Author> findByName(String name) {
-        TypedQuery<Author> query = em.createQuery("select s " +
-                        "from Author s " +
-                        "where s.name = :name",
-                Author.class);
-        query.setParameter("name", name);
-        return Optional.ofNullable(query.getSingleResult());
+        Author author  = null;
+        try {
+            TypedQuery<Author> query = em.createQuery("select s " +
+                            "from Author s " +
+                            "where s.name = :name",
+                    Author.class);
+            query.setParameter("name", name);
+            author = query.getSingleResult();
+        }catch (NoResultException ignored){
+            //TODO красивая обработка исключения + использование Optional
+        }
+        return Optional.ofNullable(author);
     }
 
     @Override
     public List<Author> findAll() {
-        return null;
+        return em.createQuery("select s from Author s", Author.class)
+                .getResultList();
     }
 }

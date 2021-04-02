@@ -26,6 +26,12 @@ public class BookDaoJdbc implements BookDao {
     public BookDaoJdbc(NamedParameterJdbcOperations namedParameterJdbcOperations) {
         this.namedParameterJdbcOperations = namedParameterJdbcOperations;
     }
+
+    @Override
+    public Book save(Book book) {
+        return null;
+    }
+
     @Override
     public long insert(Book book) {
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
@@ -67,7 +73,7 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public List<Book> getAll() {
+    public List<Book> findAll() {
         return namedParameterJdbcOperations.query("select b.id, b.title, b.genreId, b.authorId, a.name authorName, g.kind genreKind " +
                         "from (book b left join author a on b.authorId = a.id) " +
                         "left join genre g on b.genreId = g.id",

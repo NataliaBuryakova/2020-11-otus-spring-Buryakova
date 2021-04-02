@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookDao {
-
+    Book save(Book book);
     long insert(Book book);
 
     void update(Book book);
@@ -15,7 +15,7 @@ public interface BookDao {
 
     Optional<Book> findById(long id);
 
-    List<Book> getAll();
+    List<Book> findAll();
 
 
 }

@@ -14,3 +14,10 @@ insert into book (`title`, authorid, genreid) values ( 'Незнайка в со
 insert into book (`title`, authorid, genreid) values ('Алиса в стране чудес',3,2);
 insert into book (`title`, authorid, genreid) values ( 'Шерлок Холмс',4,3);
 
+insert into comment (text, bookid)
+values  ('comment_1_To_Book_1', 1),
+        ('comment_2_To_Book_1', 1),
+        ('comment_1_To_Book_2', 2),
+        ('comment_2_To_Book_2', 2),
+        ('comment_1_To_Book_3', 3);
+

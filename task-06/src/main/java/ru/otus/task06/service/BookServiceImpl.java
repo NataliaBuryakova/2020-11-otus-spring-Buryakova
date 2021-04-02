@@ -2,8 +2,7 @@ package ru.otus.task06.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.task06.dao.BookDao;
-import ru.otus.task06.dao.GenreDao;
+import ru.otus.task06.dao.BookDaoJpa;
 import ru.otus.task06.domain.Author;
 import ru.otus.task06.domain.Book;
 import ru.otus.task06.domain.Genre;
@@ -13,12 +12,12 @@ import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
-    private final BookDao bookDao;
+    private final BookDaoJpa bookDao;
     private final GenreService genreService;
     private final AuthorService authorService;
 
 
-    public BookServiceImpl(BookDao bookDao, GenreDao genreDao, GenreService genreService, AuthorService authorService) {
+    public BookServiceImpl(BookDaoJpa bookDao, GenreService genreService, AuthorService authorService) {
         this.bookDao = bookDao;
         this.genreService = genreService;
         this.authorService = authorService;
@@ -63,7 +62,7 @@ public class BookServiceImpl implements BookService {
     @Transactional(readOnly = true)
     @Override
     public List<Book> getAll() {
-        return bookDao.getAll();
+        return bookDao.findAll();
     }
 
 
