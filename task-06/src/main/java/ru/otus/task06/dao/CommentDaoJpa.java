@@ -15,11 +15,6 @@ public class CommentDaoJpa implements CommentDao {
     @PersistenceContext
     private EntityManager em;
     @Override
-    public Comment save(Comment comment) {
-        return em.merge(comment);
-    }
-
-    @Override
     public long insert(Comment comment) {
         return save(comment).getId();
     }
@@ -54,5 +49,15 @@ public class CommentDaoJpa implements CommentDao {
         TypedQuery<Comment> query = em.createQuery("select c from Comment c where c.book.id=:id", Comment.class);
         query.setParameter("id", bookId);
         return query.getResultList();
+    }
+    private Comment save(Comment comment) {
+        if(comment.getId()==null){
+            em.persist(comment);
+            em.flush();
+            return comment;
+        }else {
+            return em.merge(comment);
+        }
+
     }
 }

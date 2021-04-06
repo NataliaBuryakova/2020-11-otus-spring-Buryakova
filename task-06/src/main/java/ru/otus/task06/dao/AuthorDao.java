@@ -19,7 +19,7 @@ public interface AuthorDao {
 
     List<Author> findAll();
 
-    Author save(Author author);
+
 
 
 }

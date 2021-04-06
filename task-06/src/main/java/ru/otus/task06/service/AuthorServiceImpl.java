@@ -2,7 +2,7 @@ package ru.otus.task06.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.task06.dao.AuthorDaoJpa;
+import ru.otus.task06.dao.AuthorDao;
 import ru.otus.task06.domain.Author;
 
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.Optional;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
-    private final AuthorDaoJpa authorDao;
+    private final AuthorDao authorDao;
 
-    public AuthorServiceImpl(AuthorDaoJpa authorDao) {
+    public AuthorServiceImpl(AuthorDao authorDao) {
         this.authorDao = authorDao;
     }
     @Transactional

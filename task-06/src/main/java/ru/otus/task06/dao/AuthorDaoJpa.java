@@ -11,10 +11,8 @@ public class AuthorDaoJpa implements AuthorDao{
     @PersistenceContext
     private EntityManager em;
 
-    @Override
-    public Author save(Author author) {
-            return em.merge(author);
-    }
+
+
     @Override
     public long insert(Author author) {
         return save(author).getId();
@@ -59,5 +57,16 @@ public class AuthorDaoJpa implements AuthorDao{
     public List<Author> findAll() {
         return em.createQuery("select s from Author s", Author.class)
                 .getResultList();
+    }
+
+    private Author save(Author author) {
+        if(author.getId()==null){
+            em.persist(author);
+            em.flush();
+            return author;
+        }else {
+            return em.merge(author);
+        }
+
     }
 }

@@ -31,7 +31,7 @@ class BookDaoJpaTest {
     private static final String NEW_GENRE_KING = "Роман";
 
     @Autowired
-    private BookDaoJpa bookDaoJpa;
+    private BookDao bookDaoJpa;
     @Autowired
     private TestEntityManager em;
 
@@ -84,7 +84,7 @@ class BookDaoJpaTest {
 
     @DisplayName(" должен изменять заголовок заданной книги по ее id")
     @Test
-    void shouldUpdateStudentNameById() {
+    void shouldUpdateBookNameById() {
         val editBook = em.find(Book.class, FIRST_BOOK_ID);
         String oldName = editBook.getTitle();
         em.detach(editBook);

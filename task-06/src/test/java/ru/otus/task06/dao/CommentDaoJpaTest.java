@@ -12,14 +12,17 @@ import ru.otus.task06.domain.Book;
 import ru.otus.task06.domain.Comment;
 
 import static org.assertj.core.api.Assertions.assertThat;
-@DisplayName("Репозиторий на основе Jpa для работы с книгами ")
+@DisplayName("Репозиторий на основе Jpa для работы с комментариями ")
 @DataJpaTest
 @Import(CommentDaoJpa.class)
 class CommentDaoJpaTest {
+    private static final int EXPECTED_NUMBER_OF_ALL_COMMENTS = 5;
     private static final String NEW_COMMENT_TEXT = "comment_3To_book_1";
     private static final long FIRST_COMMENT_ID = 1L;
     private static final long FIRST_BOOK_ID = 1L;
     private static final int EXPECTED_NUMBER_OF_COMMENTS = 2;
+    private static final int EXPECTED_NUMBER_OF_QUERY_LAZY = 1;
+    private static final int EXPECTED_NUMBER_OF_QUERY = 4;
     @Autowired
     private CommentDaoJpa commentDaoJpa;
     @Autowired
@@ -68,30 +71,65 @@ class CommentDaoJpaTest {
     }
 
 
-/*
-    @DisplayName(" должен изменять заголовок заданной книги по ее id")
-    @Test
-    void shouldUpdateStudentNameById() {
-        val editBook = em.find(Book.class, FIRST_BOOK_ID);
-        String oldName = editBook.getTitle();
-        em.detach(editBook);
-        editBook.setTitle(UPDATE_BOOK_NAME);
-        bookDaoJpa.update(editBook);
-        val updatedBook = em.find(Book.class, FIRST_BOOK_ID);
 
-        assertThat(updatedBook.getTitle()).isNotEqualTo(oldName).isEqualTo(UPDATE_BOOK_NAME);
+    @DisplayName(" должен изменять комментарий заданной книги по ее id")
+    @Test
+    void shouldUpdateCommentTextByBookId() {
+        val editFirstComment = commentDaoJpa.findByBookId(FIRST_BOOK_ID).stream().findFirst().get();
+        String oldText = editFirstComment.getText();
+        em.detach(editFirstComment);
+        editFirstComment.setText(NEW_COMMENT_TEXT);
+        commentDaoJpa.update(editFirstComment);
+        val updatedComment = em.find(Comment.class, editFirstComment.getId());
+
+        assertThat(updatedComment.getText()).isNotEqualTo(oldText).isEqualTo(NEW_COMMENT_TEXT);
     }
 
-    @DisplayName(" должен удалять заданную книгу  по ее id")
+    @DisplayName(" должен удалять заданный комметнарий  по его id")
     @Test
-    void shouldDeleteBookById() {
-        val toDeleteBook = em.find(Book.class, FIRST_BOOK_ID);
-        assertThat(toDeleteBook).isNotNull();
-        em.detach(toDeleteBook);
+    void shouldDeletecommentById() {
+        val toDeleteComment = em.find(Comment.class,FIRST_COMMENT_ID );
+        assertThat(toDeleteComment).isNotNull();
+        em.detach(toDeleteComment);
 
-        bookDaoJpa.deleteById(FIRST_BOOK_ID);
-        val deletedBook = em.find(Book.class, FIRST_BOOK_ID);
+        commentDaoJpa.deleteById(FIRST_COMMENT_ID);
+        val deletedComment = em.find(Comment.class, FIRST_COMMENT_ID);
 
-        assertThat(deletedBook).isNull();
-    }*/
+        assertThat(deletedComment).isNull();
+    }
+
+    @DisplayName("должен загружать список всех комментариев без информации о книгах")
+    @Test
+    void shouldReturnCorrectCommentListWithOutBookInfo() {
+        SessionFactory sessionFactory = em.getEntityManager().getEntityManagerFactory()
+                .unwrap(SessionFactory.class);
+        sessionFactory.getStatistics().setStatisticsEnabled(true);
+        val comments = commentDaoJpa.findAll();
+
+        assertThat(comments).isNotNull().hasSize(EXPECTED_NUMBER_OF_ALL_COMMENTS)
+                .allMatch(b -> !b.getText().equals(""))
+                //.allMatch(b -> b.getBook()!=null&&!b.getBook().getTitle().equals(""))
+
+        ;
+       // System.out.println(comments.toString());
+        System.out.println(sessionFactory.getStatistics().getPrepareStatementCount());
+        assertThat(sessionFactory.getStatistics().getPrepareStatementCount()).isEqualTo(EXPECTED_NUMBER_OF_QUERY_LAZY);
+    }
+    @DisplayName("должен загружать список всех комментариев c информацией о книгах")
+    @Test
+    void shouldReturnCorrectCommentListWithBookInfo() {
+        SessionFactory sessionFactory = em.getEntityManager().getEntityManagerFactory()
+                .unwrap(SessionFactory.class);
+        sessionFactory.getStatistics().setStatisticsEnabled(true);
+        val comments = commentDaoJpa.findAll();
+
+        assertThat(comments).isNotNull().hasSize(EXPECTED_NUMBER_OF_ALL_COMMENTS)
+                .allMatch(b -> !b.getText().equals(""))
+                .allMatch(b -> b.getBook()!=null&&!b.getBook().getTitle().equals(""))
+
+        ;
+        // System.out.println(comments.toString());
+        System.out.println(sessionFactory.getStatistics().getPrepareStatementCount());
+        assertThat(sessionFactory.getStatistics().getPrepareStatementCount()).isEqualTo(EXPECTED_NUMBER_OF_QUERY);
+    }
 }

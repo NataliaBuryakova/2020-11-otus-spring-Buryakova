@@ -19,7 +19,4 @@ public interface GenreDao {
 
     List<Genre> findAll();
 
-    Genre save(Genre genre);
-
-
 }

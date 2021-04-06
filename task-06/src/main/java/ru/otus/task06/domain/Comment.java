@@ -22,7 +22,7 @@ public class Comment {
         @Column(name = "text")
         private String text;
 
-        @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+        @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
         @JoinColumn(name = "bookid")
         private Book book;
 
@@ -34,4 +34,6 @@ public class Comment {
                 this.text = text;
                 this.book = book;
         }
+
+
 }

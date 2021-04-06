@@ -1,6 +1,7 @@
 package ru.otus.task06.dao;
 
 import org.springframework.stereotype.Repository;
+import ru.otus.task06.domain.Author;
 import ru.otus.task06.domain.Book;
 
 import javax.persistence.*;
@@ -10,10 +11,7 @@ import java.util.Optional;
 public class BookDaoJpa implements BookDao {
     @PersistenceContext
     private EntityManager em;
-    @Override
-    public Book save(Book book) {
-        return em.merge(book);
-    }
+
     @Override
     public long insert(Book book) {
         return save(book).getId();
@@ -52,5 +50,15 @@ public class BookDaoJpa implements BookDao {
         //выполняет 8 запросов
        /* return em.createQuery("select s from Book s", Book.class)
                 .getResultList();*/
+    }
+    private Book save(Book book) {
+        if(book.getId()==null){
+            em.persist(book);
+            em.flush();
+            return book;
+        }else {
+            return em.merge(book);
+        }
+
     }
 }

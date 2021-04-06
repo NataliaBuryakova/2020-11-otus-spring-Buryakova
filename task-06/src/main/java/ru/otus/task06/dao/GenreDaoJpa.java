@@ -1,6 +1,8 @@
 package ru.otus.task06.dao;
 
+import org.springframework.stereotype.Repository;
 import ru.otus.task06.domain.Author;
+import ru.otus.task06.domain.Comment;
 import ru.otus.task06.domain.Genre;
 
 import javax.persistence.EntityManager;
@@ -9,15 +11,12 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
-
+@Repository
 public class GenreDaoJpa implements GenreDao {
     @PersistenceContext
     private EntityManager em;
 
-    @Override
-    public Genre save(Genre genre) {
-         return em.merge(genre);
-    }
+
     @Override
     public long insert(Genre genre) {
         return save(genre).getId();
@@ -56,5 +55,15 @@ public class GenreDaoJpa implements GenreDao {
     public List<Genre> findAll() {
         return em.createQuery("select s from Genre s", Genre.class)
                 .getResultList();
+    }
+    private Genre save(Genre genre) {
+        if(genre.getId()==null){
+            em.persist(genre);
+            em.flush();
+            return genre;
+        }else {
+            return em.merge(genre);
+        }
+
     }
 }
