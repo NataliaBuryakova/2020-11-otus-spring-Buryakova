@@ -67,8 +67,8 @@ class BookDaoJpaTest {
     @Test
     void shouldSaveAllBookInfo() {
         var newBook = new Book(NEW_BOOK_NAME);
-        newBook.setAuthor(new Author(NEW_AUTHOR_ID, NEW_AUTHOR_NAME));
-        newBook.setGenre(new Genre(NEW_GENRE_ID,NEW_GENRE_KING ));
+        newBook.setAuthor(new Author( NEW_AUTHOR_NAME));
+        newBook.setGenre(new Genre(NEW_GENRE_KING ));
         long id = bookDaoJpa.insert(newBook);
         assertThat(id).isGreaterThan(0);
 

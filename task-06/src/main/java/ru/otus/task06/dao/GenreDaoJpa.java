@@ -5,10 +5,7 @@ import ru.otus.task06.domain.Author;
 import ru.otus.task06.domain.Comment;
 import ru.otus.task06.domain.Genre;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Optional;
 @Repository
@@ -43,12 +40,18 @@ public class GenreDaoJpa implements GenreDao {
 
     @Override
     public Optional<Genre> findByKind(String kind) {
-        TypedQuery<Genre> query = em.createQuery("select s " +
-                        "from Genre s " +
-                        "where s.kind = :kind",
-                Genre.class);
-        query.setParameter("kind", kind);
-        return Optional.ofNullable(query.getSingleResult());
+        Genre genre  = null;
+        try {
+            TypedQuery<Genre> query = em.createQuery("select s " +
+                            "from Genre s " +
+                            "where s.kind = :kind",
+                    Genre.class);
+            query.setParameter("kind", kind);
+            genre = query.getSingleResult();
+        }catch (NoResultException ignored){
+            //TODO красивая обработка исключения + использование Optional
+        }
+        return Optional.ofNullable(genre);
     }
 
     @Override

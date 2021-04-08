@@ -104,6 +104,7 @@ class CommentDaoJpaTest {
         SessionFactory sessionFactory = em.getEntityManager().getEntityManagerFactory()
                 .unwrap(SessionFactory.class);
         sessionFactory.getStatistics().setStatisticsEnabled(true);
+        sessionFactory.getStatistics().clear();
         val comments = commentDaoJpa.findAll();
 
         assertThat(comments).isNotNull().hasSize(EXPECTED_NUMBER_OF_ALL_COMMENTS)
@@ -121,6 +122,7 @@ class CommentDaoJpaTest {
         SessionFactory sessionFactory = em.getEntityManager().getEntityManagerFactory()
                 .unwrap(SessionFactory.class);
         sessionFactory.getStatistics().setStatisticsEnabled(true);
+        sessionFactory.getStatistics().clear();
         val comments = commentDaoJpa.findAll();
 
         assertThat(comments).isNotNull().hasSize(EXPECTED_NUMBER_OF_ALL_COMMENTS)

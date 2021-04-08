@@ -51,8 +51,8 @@ class BookServiceImplTest {
     @Test
     void shoudCreateCorrectBook() {
         var newBook = new Book(NEW_BOOK_NAME);
-        newBook.setAuthor(new Author(NEW_AUTHOR_ID, NEW_AUTHOR_NAME));
-        newBook.setGenre(new Genre(NEW_GENRE_ID,NEW_GENRE_KING ));
+        newBook.setAuthor(new Author( NEW_AUTHOR_NAME));
+        newBook.setGenre(new Genre(NEW_GENRE_KING ));
         when(bookDao.insert(any())).thenReturn(NEW_BOOK_ID);
         assertThat(bookService.create(newBook)).isEqualTo(NEW_BOOK_ID);
     }
